@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 // generate random lines of text
 // ask person what amount of chars they want
@@ -12,12 +13,15 @@
 
 int random_seed;
 char continue_execution;
-
+int string_length;
 void generate();
 
 int main() {
   
-
+  extern int random_seed;
+  extern char continue_execution;
+  extern int string_length; // extern declarations to test.
+  
   printf("Welcome to the random string generator.\n");
   printf("Enter a number in to help seed our generator: ");
 
@@ -30,12 +34,13 @@ int main() {
         printf("Please enter a positive integer: ");
       } else {
         random_seed = check_seed;
-        printf("Thank you for entering: %d\n", random_seed);
-        printf("Proceeding to generation of strings.\n");
         continue_execution = 'Y';
       }
   }
 
+  printf("What will be the length of these strings? Enter here: ");
+  scanf("%d", &string_length);
+  
   while (continue_execution == 'Y') {
     generate();
     printf("Would you like to continue? Y or N: ");
@@ -50,6 +55,20 @@ int main() {
 }
 
 void generate() {
+  extern int string_length;
+
   printf("Generating random string...\n");
+
+  char rand_string[string_length];
+
+  for (int idx = 0; idx < string_length - 1; idx++) {
+    char rand_char = (rand() % 25) + 65; // Only uppercase letters.
+    rand_string[idx] = rand_char;
+  }
+
+  rand_string[string_length - 1] = '\0';
+
+  printf("Your string is: %s \n\n", rand_string);
   
+  printf("Exiting generate... \n\n");
 }
